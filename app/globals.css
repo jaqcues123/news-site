@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * ═══════════════════════════════════════════════════════════════════
+ *  DESIGN TOKEN SYSTEM — shared standard across NEWS / NETC sites
+ *  Source of truth: Snippet 2 (theme-midnight / theme-daylight)
+ * ═══════════════════════════════════════════════════════════════════
+ *
+ *  Surface values are raw R G B triplets so they can be composed
+ *  with alpha:  rgb(var(--surface) / 0.5)
+ */
+
+/* ── Midnight (dark) defaults — active when .dark class is on <html> ── */
+:root {
+  --surface:            19 19 19;    /* #131313 — page backdrop              */
+  --surface-lowest:     14 14 14;    /* #0e0e0e — deepest (e.g. code blocks) */
+  --surface-low:        27 27 27;    /* #1b1b1b — section surfaces           */
+  --surface-container:  31 31 31;    /* #1f1f1f — cards, panels              */
+  --surface-high:       42 42 42;    /* #2a2a2a — inputs, asphalt gray       */
+  --surface-highest:    53 53 53;    /* #353535 — highest elevation          */
+  --on-surface:         226 226 226; /* #e2e2e2 — primary text               */
+  --on-surface-muted:   120 120 120; /* #787878 — muted / secondary text     */
+  --glass-bg:           rgba(0, 0, 0, 0.85);
+}
+
+/* ── Daylight (light) overrides — active when .dark class is absent ── */
+html:not(.dark) {
+  --surface:            240 238 235;
+  --surface-lowest:     232 230 226;
+  --surface-low:        245 243 240;
+  --surface-container:  248 247 244;
+  --surface-high:       255 255 255;
+  --surface-highest:    232 230 226;
+  --on-surface:         15 15 15;
+  --on-surface-muted:   80 78 72;
+  --glass-bg:           rgba(240, 238, 235, 0.92);
+}
+
+/* ── Fixed accent tokens — identical in all themes ── */
+:root {
+  --primary-container:    255 199 0;   /* #FFC700 — main accent (yellow)     */
+  --primary-fixed-dim:    245 191 0;   /* #F5BF00 — accent hover / dimmed    */
+  --primary:              255 233 185; /* soft yellow, for text on dark       */
+  --on-primary:           62 46 0;     /* dark gold, text on primary bg       */
+  --on-primary-container: 0 0 0;       /* black — text on yellow buttons      */
+  --outline:              155 144 120;
+  --outline-variant:      79 70 50;
+  --error:                255 180 171;
+  --error-container:      147 0 10;
+}
+
+/*
+ * ═══════════════════════════════════════════════════════════════════
+ *  SEMANTIC ALIASES — site-specific shortcuts wired to tokens above
+ *  These are what component code consumes.
+ * ═══════════════════════════════════════════════════════════════════
+ */
+:root {
+  /* Accent */
+  --accent:       rgb(var(--primary-container));        /* #FFC700 */
+  --accent-dark:  rgb(var(--primary-fixed-dim));        /* #F5BF00 */
+  --accent-text:  rgb(var(--on-primary-container));     /* #000000 */
+
+  /* Surfaces */
+  --bg-page:      rgb(var(--surface));
+  --bg-surface:   rgb(var(--surface-low));
+  --bg-card:      rgb(var(--surface-container));
+  --bg-input:     rgb(var(--surface-high));
+
+  /* Text */
+  --text-primary:   rgb(var(--on-surface));
+  --text-secondary: rgb(var(--on-surface));              /* same base, slightly softer in practice via opacity contexts */
+  --text-muted:     rgb(var(--on-surface-muted));
+
+  /* Borders — semi-transparent on-surface tint */
+  --border: rgba(var(--on-surface), 0.10);
+}
+
+/* ── Base ──────────────────────────────────────────────── */
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--bg-page);
+    color: var(--text-secondary);
+    transition: background-color 0.25s, color 0.25s;
+  }
+
+  h1 { @apply text-4xl md:text-5xl font-bold leading-tight; }
+  h2 { @apply text-3xl md:text-4xl font-bold leading-snug; }
+  h3 { @apply text-2xl md:text-3xl font-semibold leading-snug; }
+}
+
+/* ── Component Classes ─────────────────────────────────── */
+@layer components {
+  /* ── Buttons ── */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 font-semibold
+           px-6 py-3 rounded-lg transition-all duration-200
+           hover:shadow-lg active:scale-[0.98];
+    background-color: var(--accent);
+    color: var(--accent-text);
+  }
+  .btn-primary:hover { background-color: var(--accent-dark); }
+
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 bg-[#3A6EA5] hover:bg-[#2C5580] text-white
+           font-semibold px-6 py-3 rounded-lg transition-all duration-200
+           hover:shadow-lg active:scale-[0.98];
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-2 border-2 border-white text-white font-semibold
+           px-6 py-3 rounded-lg transition-all duration-200
+           hover:bg-white hover:text-[#111111] active:scale-[0.98];
+  }
+
+  /* ── Cards ── */
+  .card {
+    @apply rounded-xl transition-all duration-200;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+  .card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+  .dark .card {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  }
+  .dark .card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  }
+
+  /* ── Layout ── */
+  .section-pad    { @apply py-10 md:py-20; }
+  .container-site { @apply max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8; }
+
+  /* ── Background helpers ── */
+  .bg-page        { background-color: var(--bg-page); }
+  .bg-surface     { background-color: var(--bg-surface); }
+  .bg-card-surface { background-color: var(--bg-card); }
+
+  /* ── Text helpers ── */
+  .text-primary   { color: var(--text-primary); }
+  .text-secondary { color: var(--text-secondary); }
+  .text-muted     { color: var(--text-muted); }
+  .border-theme   { border-color: var(--border); }
+
+  /* ── Status badges ── */
+  .status-badge     { @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wide; }
+  .status-available { @apply status-badge bg-green-100 text-green-800; }
+  .status-pending   { @apply status-badge bg-yellow-100 text-yellow-800; }
+  .status-sold      { @apply status-badge bg-gray-100 text-gray-600; }
+
+  /* ── Form elements ── */
+  .form-input {
+    @apply w-full px-4 py-3 rounded-md text-sm transition-colors duration-150;
+    background-color: var(--bg-input);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+  }
+  .form-input::placeholder { color: var(--text-muted); }
+  .form-input:focus {
+    outline: none;
+    border-color: #3A6EA5;
+    box-shadow: 0 0 0 2px rgba(58, 110, 165, 0.25);
+  }
+
+  .form-label {
+    @apply block text-sm font-medium mb-1.5;
+    color: var(--text-secondary);
+  }
+
+  .form-panel {
+    @apply rounded-xl p-6;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+  }
+}
