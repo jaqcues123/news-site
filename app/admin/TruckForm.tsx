@@ -43,12 +43,47 @@ export default function TruckForm({ initial, onSave, onCancel }: TruckFormProps)
 
   const [images, setImages] = useState<string[]>(initial?.images ?? []);
   const [uploading, setUploading] = useState(false);
+  const [uploadingPdf, setUploadingPdf] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
+  const pdfRef = useRef<HTMLInputElement>(null);
 
   const set = (field: string, value: string) =>
     setForm((prev) => ({ ...prev, [field]: value }));
+
+  const handlePdfUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingPdf(true);
+    const truckId = initial?.id ?? `nrc-${Date.now()}`;
+
+    try {
+      const base64 = await fileToBase64(file);
+      const res = await fetch("/api/admin/upload", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          truckId,
+          filename: file.name,
+          base64: base64.split(",")[1],
+          mimeType: file.type,
+          folder: "quotes/trucks",
+        }),
+      });
+
+      if (res.ok) {
+        const { url } = await res.json();
+        set("buildsheet_url", url);
+      }
+    } catch {
+      console.error("PDF upload failed for", file.name);
+    }
+
+    setUploadingPdf(false);
+    if (pdfRef.current) pdfRef.current.value = "";
+  };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files ?? []);
@@ -186,14 +221,48 @@ export default function TruckForm({ initial, onSave, onCancel }: TruckFormProps)
         </div>
 
         <div>
-          <label className="form-label">Buildsheet URL (PDF)</label>
+          <label className="form-label">Quote PDF</label>
           <input
-            type="url"
-            value={form.buildsheet_url}
-            onChange={(e) => set("buildsheet_url", e.target.value)}
-            placeholder="https://..."
-            className="form-input"
+            ref={pdfRef}
+            type="file"
+            accept="application/pdf"
+            className="hidden"
+            onChange={handlePdfUpload}
           />
+          {form.buildsheet_url ? (
+            <div className="flex items-center gap-2 p-2.5 border border-[#E0E0E0] rounded-lg bg-[#F5F5F5]">
+              <svg className="w-4 h-4 text-[#3A6EA5] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              <span className="text-sm text-[#111111] truncate flex-1">
+                {form.buildsheet_url.split("/").pop()}
+              </span>
+              <button
+                type="button"
+                onClick={() => pdfRef.current?.click()}
+                className="text-xs text-[#3A6EA5] hover:underline flex-shrink-0"
+              >
+                {uploadingPdf ? "Uploading…" : "Replace"}
+              </button>
+              <button
+                type="button"
+                onClick={() => set("buildsheet_url", "")}
+                className="text-xs text-red-500 hover:underline flex-shrink-0"
+              >
+                Remove
+              </button>
+            </div>
+          ) : (
+            <div
+              onClick={() => pdfRef.current?.click()}
+              className="border-2 border-dashed border-[#E0E0E0] rounded-lg p-4 text-center cursor-pointer hover:border-[#3A6EA5] transition-colors group"
+            >
+              <p className="text-sm text-[#9E9E9E] group-hover:text-[#3A6EA5] transition-colors">
+                {uploadingPdf ? "Uploading…" : "Click to upload quote PDF"}
+              </p>
+              <p className="text-xs text-[#9E9E9E] mt-0.5">PDF only</p>
+            </div>
+          )}
         </div>
       </div>
 
