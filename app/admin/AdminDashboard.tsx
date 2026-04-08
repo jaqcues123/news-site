@@ -126,7 +126,7 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F5F5F5] pt-16">
+    <div className="min-h-screen bg-page pt-16">
       {/* Admin header */}
       <div className="bg-[#111111] sticky top-16 z-40">
         <div className="container-site py-4 flex items-center justify-between">
@@ -158,16 +158,16 @@ export default function AdminDashboard() {
             const count = trucks.filter((t) => t.status === status).length;
             return (
               <div key={status} className="card p-4">
-                <div className="text-2xl font-black text-[#111111]">{count}</div>
-                <div className="text-xs text-[#9E9E9E] uppercase tracking-wide mt-0.5 capitalize">
+                <div className="text-2xl font-black text-primary">{count}</div>
+                <div className="text-xs text-muted uppercase tracking-wide mt-0.5 capitalize">
                   {status}
                 </div>
               </div>
             );
           })}
           <div className="card p-4">
-            <div className="text-2xl font-black text-[#111111]">{trucks.length}</div>
-            <div className="text-xs text-[#9E9E9E] uppercase tracking-wide mt-0.5">
+            <div className="text-2xl font-black text-primary">{trucks.length}</div>
+            <div className="text-xs text-muted uppercase tracking-wide mt-0.5">
               Total Units
             </div>
           </div>
@@ -175,8 +175,8 @@ export default function AdminDashboard() {
 
         {/* Truck Table */}
         <div className="card overflow-hidden">
-          <div className="px-6 py-4 border-b border-[#F5F5F5] flex items-center justify-between">
-            <h2 className="font-bold text-[#111111]">All Trucks</h2>
+          <div className="px-6 py-4 border-b border-theme flex items-center justify-between">
+            <h2 className="font-bold text-primary">All Trucks</h2>
             {loading && (
               <span className="text-xs text-[#9E9E9E] animate-pulse">Loading...</span>
             )}
@@ -185,18 +185,18 @@ export default function AdminDashboard() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="bg-[#F5F5F5]">
+                <tr className="bg-page">
                   {["Title", "Type", "Price", "Status", "Actions"].map((h) => (
                     <th
                       key={h}
-                      className="px-4 py-3 text-left text-xs font-semibold text-[#9E9E9E] uppercase tracking-wide whitespace-nowrap"
+                      className="px-4 py-3 text-left text-xs font-semibold text-muted uppercase tracking-wide whitespace-nowrap"
                     >
                       {h}
                     </th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#F5F5F5]">
+              <tbody className="divide-y divide-[var(--border)]">
                 {trucks.length === 0 && !loading && (
                   <tr>
                     <td colSpan={5} className="px-4 py-10 text-center text-[#9E9E9E]">
@@ -211,13 +211,13 @@ export default function AdminDashboard() {
                   </tr>
                 )}
                 {trucks.map((truck) => (
-                  <tr key={truck.id} className="hover:bg-[#fafafa] transition-colors">
-                    <td className="px-4 py-3 font-medium text-[#111111] max-w-[280px]">
+                  <tr key={truck.id} className="hover:bg-[var(--bg-surface)] transition-colors">
+                    <td className="px-4 py-3 font-medium text-primary max-w-[280px]">
                       <div className="truncate">{truck.title}</div>
-                      <div className="text-xs text-[#9E9E9E] truncate">{truck.id}</div>
+                      <div className="text-xs text-muted truncate">{truck.id}</div>
                     </td>
-                    <td className="px-4 py-3 capitalize text-[#2B2B2B]">{truck.type}</td>
-                    <td className="px-4 py-3 text-[#2B2B2B] whitespace-nowrap">
+                    <td className="px-4 py-3 capitalize text-secondary">{truck.type}</td>
+                    <td className="px-4 py-3 text-secondary whitespace-nowrap">
                       {truck.price > 0 ? `$${truck.price.toLocaleString()}` : "—"}
                     </td>
                     <td className="px-4 py-3">

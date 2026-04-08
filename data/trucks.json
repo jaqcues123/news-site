@@ -6,7 +6,9 @@
     "price": 485000,
     "status": "available",
     "type": "rotator",
-    "images": ["/images/trucks/placeholder-rotator.jpg"],
+    "images": [
+      "/images/trucks/placeholder-rotator.jpg"
+    ],
     "buildsheet_url": "",
     "specs": {
       "chassis": "Kenworth T880",
@@ -30,7 +32,9 @@
     "price": 285000,
     "status": "available",
     "type": "wrecker",
-    "images": ["/images/trucks/placeholder-wrecker.jpg"],
+    "images": [
+      "/images/trucks/placeholder-wrecker.jpg"
+    ],
     "buildsheet_url": "",
     "specs": {
       "chassis": "Peterbilt 567",
@@ -53,7 +57,9 @@
     "price": 145000,
     "status": "available",
     "type": "rollback",
-    "images": ["/images/trucks/placeholder-rollback.jpg"],
+    "images": [
+      "/images/trucks/placeholder-rollback.jpg"
+    ],
     "buildsheet_url": "",
     "specs": {
       "chassis": "International HV607",
