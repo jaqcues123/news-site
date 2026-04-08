@@ -1,0 +1,73 @@
+[
+  {
+    "id": "nrc-001",
+    "title": "2024 Kenworth T880 50-Ton Rotator",
+    "description": "Custom NRC-built heavy-duty rotator built on a Kenworth T880 chassis. This unit features a 50-ton rotator boom capable of full 360-degree rotation, dual planetary winches, and a full LED lighting package. Spec'd for heavy recovery operations and highway clearing.",
+    "price": 485000,
+    "status": "available",
+    "type": "rotator",
+    "images": ["/images/trucks/placeholder-rotator.jpg"],
+    "buildsheet_url": "",
+    "specs": {
+      "chassis": "Kenworth T880",
+      "engine": "Paccar MX-13 565HP",
+      "boom": "50-ton full-rotation rotator boom",
+      "winch": "Dual 50,000 lb planetary winches",
+      "additional_features": [
+        "Full LED light package",
+        "Air ride suspension",
+        "Polished aluminum wheels",
+        "Stainless steel toolboxes",
+        "Integrated air compressor"
+      ]
+    },
+    "created_at": "2024-03-01T00:00:00Z"
+  },
+  {
+    "id": "nrc-002",
+    "title": "2024 Peterbilt 567 35-Ton Integrated",
+    "description": "NRC custom integrated wrecker on a Peterbilt 567. Built for medium-heavy recovery with a 35-ton integrated boom, hydraulic underlift, and full recovery package. Ready to work out of the box.",
+    "price": 285000,
+    "status": "available",
+    "type": "wrecker",
+    "images": ["/images/trucks/placeholder-wrecker.jpg"],
+    "buildsheet_url": "",
+    "specs": {
+      "chassis": "Peterbilt 567",
+      "engine": "Paccar MX-13 510HP",
+      "boom": "35-ton integrated boom",
+      "winch": "35,000 lb main winch / 8,000 lb underlift",
+      "additional_features": [
+        "Hydraulic underlift",
+        "Side recovery kit",
+        "LED work lights",
+        "Chrome exhaust"
+      ]
+    },
+    "created_at": "2024-03-10T00:00:00Z"
+  },
+  {
+    "id": "nrc-003",
+    "title": "2024 International HV607 Flatbed Rollback",
+    "description": "NRC-built heavy-duty rollback on an International HV607. Aluminum deck, 21-foot steel bed with hydraulic tilt, ideal for transporting disabled vehicles and equipment. Fully air-ride equipped.",
+    "price": 145000,
+    "status": "available",
+    "type": "rollback",
+    "images": ["/images/trucks/placeholder-rollback.jpg"],
+    "buildsheet_url": "",
+    "specs": {
+      "chassis": "International HV607",
+      "engine": "International A26 450HP",
+      "boom": "N/A",
+      "winch": "12,000 lb hydraulic winch",
+      "additional_features": [
+        "21-ft aluminum deck",
+        "Hydraulic tilt",
+        "Air ride",
+        "Wireless remote",
+        "Full LED package"
+      ]
+    },
+    "created_at": "2024-03-15T00:00:00Z"
+  }
+]
